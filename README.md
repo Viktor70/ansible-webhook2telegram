@@ -9,6 +9,7 @@ None.
 ## Role Variables
 
 Available variables are listed below (see `defaults/main.yml`):
+```
 webhook2telegram_version: 2.2.3 - release version 
 
 webhook2telegram_token: "" you have to get telegramtoken from botfather
@@ -24,12 +25,12 @@ webhook2telegram_keyName: privkey.pem
 
 webhook2telegram_set_webhook: false
 webhook2telegram_delete_webhook: false
-
+```
 ## Example Playbook
 
 Including an example of how to use your role
 install in local net and use polling mode
-
+```
 - hosts: localhost
   become: yes
   vars:
@@ -40,8 +41,9 @@ install in local net and use polling mode
     - name: "Include ansible-webhook2telegram"
       include_role:
         name: "ansible-webhook2telegram"
-
+```
 if you want to use webhook mode, you need public domen and tls sertificate
+```
 - hosts: remotehost
   become: yes
   vars:
@@ -58,9 +60,10 @@ if you want to use webhook mode, you need public domen and tls sertificate
     - name: "Include ansible-webhook2telegram"
       include_role:
         name: "ansible-webhook2telegram"
-
+```
 ## License
 
 MIT / BSD
 
 ## Author Information
+This role was created by Viktor Nazarov
