@@ -1,0 +1,88 @@
+---
+- name: Add the user 'webhook' with a sh shell
+  ansible.builtin.user:
+    name: webhook
+    shell: /bin/sh
+    create_home: true
+- name: check if installed unzip
+  stat:
+    path: /usr/bin/unzip
+  register: install_unzip
+    
+- name: install unzip
+  apt:
+    name: unzip
+    update_cache: yes
+  when: not install_unzip.stat.exists  
+
+- name: check if installed webhook2telegram
+  stat:
+    path: /usr/bin/webhook2telegram
+  register: webhook_bin_exist
+
+- name: mkdir data
+  file: 
+    path: /home/webhook/data
+    state: directory
+    mode: '0755'
+
+- name: extract files
+  unarchive:
+    src: "{{ webhook2telegram_bot_download_url }}"
+    dest: /home/webhook/data
+    remote_src: yes
+    exclude:
+      - Dockerfile  
+      - api/*
+      - doap.rdf
+      - go.sum
+      - main.go
+      - resolvers/*
+      - store/*
+      - LICENSE
+      - botfather/*
+      - docker/*
+      - handlers/*
+      - middleware/*
+      - scripts/*
+      - util/*
+      - README.md
+      - config/*
+      - go.mod
+      - inlets/*
+      - model/*
+      - services/*
+      - .dockerignore
+  when: not webhook_bin_exist or webhook2telegram_force_install
+
+- name: move webhook2telegram to /usr/bin
+  command: mv /home/webhook/data/webhook2telegram /usr/bin/.
+  when: not webhook_bin_exist or webhook2telegram_force_install
+    
+- name: Change file ownership, group and permissions
+  file:
+    path: /home/webhook/
+    owner: webhook
+    group: webhook
+    recurse: yes
+    
+- name: copy sertificate
+  copy:
+    src: .
+    dest: /home/webhook/data
+  when: webhook2telegram_https
+    
+- name: create systemd service unit
+  template:
+    src: webhook2telegram.j2
+    dest: "/lib/systemd/system/webhook2telegram.service"
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
+  notify:
+    - restart webhook2telegram
+
+
+
+

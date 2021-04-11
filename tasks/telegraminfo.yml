@@ -1,0 +1,19 @@
+---
+- name: set webhook
+  uri:
+    url: "https://api.telegram.org/bot{{ webhook2telegram_token }}/setWebhook"
+    method: POST
+    body_format: json
+    body: 
+        url: "https://{{ webhook2telegram_domen }}:{{ webhook2telegram_port }}/api/updates"
+  when: webhook2telegram_set_webhook   
+  tags: setwebhook
+  
+- name: delete webhook
+  uri:
+    url: "https://api.telegram.org/bot{{ webhook2telegram_token }}/deleteWebhook"
+  when: webhook2telegram_delete_webhook
+  tags: delete_webhook
+
+
+

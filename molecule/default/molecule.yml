@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+platforms:
+  - name: ubuntu
+    box: ubuntu/focal64
+    instance_raw_config_args:
+      - 'vm.network "public_network",ip: "192.168.1.14" , bridge: "enp3s0"'
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra

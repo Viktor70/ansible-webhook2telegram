@@ -1,0 +1,11 @@
+---
+- include: prerequisites.yml
+- include: install.yml
+- include: telegraminfo.yml
+- name: Make sure a service is started and enabled
+  systemd:
+    name: webhook2telegram.service
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

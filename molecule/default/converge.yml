@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: localhost
+  become: yes
+  vars:
+      webhook2telegram_token: 1651815500:AAFw2f18Soq0MU0EAyXuVq1bnFGe93yY3MA
+      webhook2telegram_ip: 192.168.1.14
+      webhook2telegram_webhook: false
+  tasks:
+    - name: "Include ansible-webhook2telegram"
+      include_role:
+        name: "ansible-webhook2telegram"
+    

@@ -1,0 +1,27 @@
+[Unit]
+Description=webhook2telegram service
+
+[Service]
+Type=simple
+User=webhook
+Restart=always
+WorkingDirectory=/home/webhook/data
+ExecStart=webhook2telegram \
+    -dataDir /home/webhook/data \
+    -address {{ webhook2telegram_ip }} \
+    -port {{ webhook2telegram_port }}\
+    -disableIPv6  \
+{% if webhook2telegram_webhook %}
+    -mode webhook \
+{% endif %}
+{% if webhook2telegram_https %}
+    -useHttps  \
+    -certPath {{ webhook2telegram_certName }} \
+    -keyPath {{ webhook2telegram_keyName }} \
+{% endif %}
+{% if webhook2telegram_metrics %}
+    -metrics true \
+{% endif %}
+    -token {{ webhook2telegram_token }} 
+[Install]
+WantedBy=multi-user.target

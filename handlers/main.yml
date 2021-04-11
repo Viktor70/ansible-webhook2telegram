@@ -1,0 +1,8 @@
+---
+- name: restart webhook2telegram
+  become: true
+  systemd:
+    daemon_reload: true
+    name: webhook2telegram.service
+    state: restarted
+   

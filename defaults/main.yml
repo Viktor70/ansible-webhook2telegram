@@ -1,0 +1,17 @@
+---
+webhook2telegram_version: 2.2.3
+webhook2telegram_bot_download_url: "https://github.com/muety/webhook2telegram/releases/download/{{ webhook2telegram_version }}/webhook2telegram_linux_amd64.zip"
+
+webhook2telegram_token: ""
+webhook2telegram_force_install: true
+webhook2telegram_ip: 127.0.0.1 # could be external ip
+webhook2telegram_port: 8443 #443, 80, 88, or 8443.
+webhook2telegram_webhook: true
+webhook2telegram_metrics: false
+webhook2telegram_https: false
+webhook2telegram_domen: ""
+webhook2telegram_certName: fullchain.pem
+webhook2telegram_keyName: privkey.pem
+
+webhook2telegram_set_webhook: false
+webhook2telegram_delete_webhook: false
